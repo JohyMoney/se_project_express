@@ -1,5 +1,3 @@
-const _id = "eslint-config-node";
-
 module.exports = {
   env: {
     es2021: true,
@@ -23,5 +21,6 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
-  },
+  "no-underscore-dangle": ["error", { "allow": ["_id"] }]
+},
 };

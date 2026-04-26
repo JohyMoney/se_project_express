@@ -1,57 +1,51 @@
-const User = require ('../models/User');
+const User = require("../models/user");
+const { BAD_REQUEST, NOT_FOUND } = require("../utils/errors");
 
-const getUsers = async (req, res) => {
+const getUsers = (req, res, next) => {
   User.find({})
-      .then(users => res.json(users))
-      .catch(err => {
-          console.error(err);
-          res.status(500).json({ message: 'Server error' });
-      });
-
-    try {
-        const users = await User.find();
-        res.json(users);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error' });
-    }
-    if (err) {
-        console.error(err);
-        res.status(400).json({ message: 'Server error' });
-    }
+    .then((users) => res.send(users))
+    .catch(next);
 };
 
-const createUser = async (req, res) => {
-    const { name, email } = req.body;
+const getUserById = (req, res, next) => {
+  const { userId } = req.params;
 
-    user.create{name,avatar}
+  User.findById(userId)
+    .orFail(() => {
+      const error = new Error("User not found");
+      error.statusCode = NOT_FOUND;
+      throw error;
+    })
+    .then((user) => res.send(user))
+    .catch((err) => {
+      if (err.name === "CastError") {
+        const error = new Error("Invalid user id");
+        error.statusCode = BAD_REQUEST;
+        return next(error);
+      }
 
-    try {
-        const newUser = new User({ name, email });
-        await newUser.save();
-        res.status(201).json(newUser);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error' });
-    }
+      return next(err);
+    });
 };
 
-const createUser = async (req, res) => {
-    const { name, email } = req.body;
+const createUser = (req, res, next) => {
+  const { name, avatar } = req.body;
 
-    try {
-        const newUser = new User({ name, email });
-        await newUser.save();
-        res.status(201).json(newUser);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server error' });
-    }
+  User.create({ name, avatar })
+    .then((user) => res.status(201).send(user))
+    .catch((err) => {
+      if (err.name === "ValidationError") {
+        const error = new Error("Invalid user data");
+        error.statusCode = BAD_REQUEST;
+        return next(error);
+      }
+
+      return next(err);
+    });
 };
-
-
 
 module.exports = {
-    getUsers,
-    createUser
+  getUsers,
+  getUserById,
+  createUser,
 };
