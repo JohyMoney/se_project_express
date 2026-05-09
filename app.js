@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const mainRoutes = require("./routes/index");
 const { INTERNAL_SERVER_ERROR, BAD_REQUEST } = require("./utils/errors");
 
@@ -8,14 +9,7 @@ const app = express();
 const { PORT = 3001 } = process.env;
 
 app.use(express.json());
-
-app.use((req, res, next) => {
-  req.user = {
-    _id: "685f0f0f8f0f0f0f0f0f0f0f",
-  };
-
-  next();
-});
+app.use(cors());
 
 app.use("/", mainRoutes);
 
