@@ -1,13 +1,5 @@
 const mongoose = require("mongoose");
-
-const isValidUrl = (value) => {
-  try {
-    const parsedUrl = new URL(value);
-    return parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:";
-  } catch {
-    return false;
-  }
-};
+const validator = require("validator");
 
 const clothingItemSchema = new mongoose.Schema({
   name: {
@@ -25,7 +17,7 @@ const clothingItemSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: isValidUrl,
+      validator: validator.isURL,
       message: "Invalid image URL",
     },
   },
@@ -35,14 +27,20 @@ const clothingItemSchema = new mongoose.Schema({
     ref: "user",
   },
   likes: {
-    type: [mongoose.Schema.Types.ObjectId],
+    type: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+      },
+    ],
+    required: true,
     default: [],
-    ref: "user",
   },
   createdAt: {
     type: Date,
+    required: true,
     default: Date.now,
   },
 });
 
-module.exports = mongoose.model("item", clothingItemSchema);
+module.exports = mongoose.model("clothingItem", clothingItemSchema);

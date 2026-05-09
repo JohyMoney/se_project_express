@@ -1,15 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const validator = require("validator");
 const { UNAUTHORIZED } = require("../utils/errors");
-
-const isValidUrl = (value) => {
-  try {
-    const parsedUrl = new URL(value);
-    return parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:";
-  } catch {
-    return false;
-  }
-};
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -22,7 +14,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     validate: {
-      validator: isValidUrl,
+      validator: validator.isURL,
       message: "Invalid avatar URL",
     },
   },
@@ -31,7 +23,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
     validate: {
-      validator: (value) => /^\S+@\S+\.\S+$/.test(value),
+      validator: validator.isEmail,
       message: "Invalid email",
     },
   },

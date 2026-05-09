@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const mainRoutes = require("./routes/index");
-const { INTERNAL_SERVER_ERROR, BAD_REQUEST } = require("./utils/errors");
+const { INTERNAL_SERVER_ERROR } = require("./utils/errors");
 
 const app = express();
 
@@ -21,19 +21,16 @@ app.use((err, req, res, next) => {
   console.error(err);
 
   const statusCode = err.statusCode || INTERNAL_SERVER_ERROR;
-  let message;
-
-  if (statusCode === BAD_REQUEST) {
-    message = "Invalid data";
-  } else {
-    message = "An error has occurred on the server.";
-  }
+  const message =
+    statusCode === INTERNAL_SERVER_ERROR
+      ? "An error has occurred on the server."
+      : err.message;
 
   return res.status(statusCode).send({ message });
 });
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/wtwr_db")
+  .connect("mongodb://localhost:27017/wtwr_db")
   .then(() => {
     console.log("Connected to MongoDB");
   })
