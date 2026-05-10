@@ -1,4 +1,4 @@
-const ClothingItem = require("../models/clothingItem");
+const ClothingItem = require("../models/clothingitem");
 const { BAD_REQUEST, NOT_FOUND, FORBIDDEN } = require("../utils/errors");
 
 const getItems = (req, res, next) => {
