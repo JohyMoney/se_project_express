@@ -1,5 +1,5 @@
-const { NOT_FOUND } = require('../utils/errors');
 const router = require("express").Router();
+const { NOT_FOUND } = require('../utils/errors');
 const { login, createUser } = require("../controllers/users");
 const { getItems } = require("../controllers/clothingItems");
 const auth = require("../middlewares/auth");

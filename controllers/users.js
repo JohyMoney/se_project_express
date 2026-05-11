@@ -68,7 +68,7 @@ const createUser = (req, res, next) => {
       message: 'The "email" and "password" fields are required'
     });
   }
-  bcrypt
+  return bcrypt
     .hash(password, 10)
     .then((hash) => User.create({
       name,
@@ -107,17 +107,15 @@ const login = (req, res, next) => {
       message: 'Email and password are required'
     });
   }
-  User.findUserByCredentials(email, password)
+  return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: "7d" });
-
-      res.send({ token });
+      return res.send({ token });
     })
     .catch((err) => {
       if (err.statusCode === UNAUTHORIZED) {
         return res.status(UNAUTHORIZED).send({ message: "Incorrect email or password" });
       }
-
       return next(err);
     });
 };
