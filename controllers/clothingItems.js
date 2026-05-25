@@ -1,5 +1,7 @@
 const ClothingItem = require("../models/clothingItem");
-const { BAD_REQUEST, NOT_FOUND, FORBIDDEN } = require("../utils/errors");
+const BadRequestError = require("../errors/bad-request-error");
+const NotFoundError = require("../errors/not-found-error");
+const ForbiddenError = require("../errors/forbidden-error");
 
 const getItems = (req, res, next) => {
   ClothingItem.find({})
@@ -18,12 +20,8 @@ const createItem = (req, res, next) => {
   })
     .then((item) => res.status(201).send(item))
     .catch((err) => {
-      console.error(err);
-
       if (err.name === "ValidationError") {
-        const error = new Error("Invalid data");
-        error.statusCode = BAD_REQUEST;
-        return next(error);
+        return next(new BadRequestError("Invalid data"));
       }
 
       return next(err);
@@ -36,26 +34,18 @@ const deleteItem = (req, res, next) => {
     .orFail()
     .then((item) => {
       if (item.owner.toString() !== req.user._id) {
-        const error = new Error("You cannot delete another user's item");
-        error.statusCode = FORBIDDEN;
-        throw error;
+        throw new ForbiddenError("You cannot delete another user's item");
       }
 
       return item.deleteOne().then(() => res.send(item));
     })
     .catch((err) => {
-      console.error(err);
-
       if (err.name === "DocumentNotFoundError") {
-        const error = new Error("Item not found");
-        error.statusCode = NOT_FOUND;
-        return next(error);
+        return next(new NotFoundError("Item not found"));
       }
 
       if (err.name === "CastError") {
-        const error = new Error("Invalid data");
-        error.statusCode = BAD_REQUEST;
-        return next(error);
+        return next(new BadRequestError("Invalid data"));
       }
 
       return next(err);
@@ -73,18 +63,12 @@ const likeItem = (req, res, next) => {
     .orFail()
     .then((item) => res.send(item))
     .catch((err) => {
-      console.error(err);
-
       if (err.name === "DocumentNotFoundError") {
-        const error = new Error("Item not found");
-        error.statusCode = NOT_FOUND;
-        return next(error);
+        return next(new NotFoundError("Item not found"));
       }
 
       if (err.name === "CastError") {
-        const error = new Error("Invalid data");
-        error.statusCode = BAD_REQUEST;
-        return next(error);
+        return next(new BadRequestError("Invalid data"));
       }
 
       return next(err);
@@ -102,18 +86,12 @@ const dislikeItem = (req, res, next) => {
     .orFail()
     .then((item) => res.send(item))
     .catch((err) => {
-      console.error(err);
-
       if (err.name === "DocumentNotFoundError") {
-        const error = new Error("Item not found");
-        error.statusCode = NOT_FOUND;
-        return next(error);
+        return next(new NotFoundError("Item not found"));
       }
 
       if (err.name === "CastError") {
-        const error = new Error("Invalid data");
-        error.statusCode = BAD_REQUEST;
-        return next(error);
+        return next(new BadRequestError("Invalid data"));
       }
 
       return next(err);

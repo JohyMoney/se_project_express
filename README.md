@@ -24,6 +24,11 @@ This project is the backend API for WTWR. It provides user authentication and pr
 - npm run dev: launches the server on localhost:3001 with hot reload
 - npm run lint: runs ESLint from the command line
 
+## Access Information
+- Deployed backend domain: N/A
+- Frontend GitHub repository: N/A
+- Project pitch video: N/A
+
 ## Media
 - Screenshots/GIFs: add screenshots of key API behavior or Postman results here
 - Video Demo: add a short demo link here

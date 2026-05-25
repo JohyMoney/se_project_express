@@ -1,9 +1,9 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const {
-  BAD_REQUEST, NOT_FOUND, CONFLICT, UNAUTHORIZED,
-} = require("../utils/errors");
+const BadRequestError = require("../errors/bad-request-error");
+const NotFoundError = require("../errors/not-found-error");
+const ConflictError = require("../errors/conflict-error");
 const { JWT_SECRET } = require("../utils/config");
 
 const getCurrentUser = (req, res, next) => {
@@ -11,18 +11,12 @@ const getCurrentUser = (req, res, next) => {
     .orFail()
     .then((user) => res.send(user))
     .catch((err) => {
-      console.error(err);
-
       if (err.name === "DocumentNotFoundError") {
-        const error = new Error("User not found");
-        error.statusCode = NOT_FOUND;
-        return next(error);
+        return next(new NotFoundError("User not found"));
       }
 
       if (err.name === "CastError") {
-        const error = new Error("Invalid data");
-        error.statusCode = BAD_REQUEST;
-        return next(error);
+        return next(new BadRequestError("Invalid data"));
       }
 
       return next(err);
@@ -43,18 +37,12 @@ const updateProfile = (req, res, next) => {
     .orFail()
     .then((user) => res.send(user))
     .catch((err) => {
-      console.error(err);
-
       if (err.name === "DocumentNotFoundError") {
-        const error = new Error("User not found");
-        error.statusCode = NOT_FOUND;
-        return next(error);
+        return next(new NotFoundError("User not found"));
       }
 
       if (err.name === "ValidationError" || err.name === "CastError") {
-        const error = new Error("Invalid data");
-        error.statusCode = BAD_REQUEST;
-        return next(error);
+        return next(new BadRequestError("Invalid data"));
       }
 
       return next(err);
@@ -63,11 +51,7 @@ const updateProfile = (req, res, next) => {
 
 const createUser = (req, res, next) => {
   const { name, avatar, email, password } = req.body;
-  if (!email || !password) {
-    return res.status(BAD_REQUEST).send({
-      message: 'The "email" and "password" fields are required'
-    });
-  }
+
   return bcrypt
     .hash(password, 10)
     .then((hash) => User.create({
@@ -82,18 +66,12 @@ const createUser = (req, res, next) => {
       return res.status(201).send(userObject);
     })
     .catch((err) => {
-      console.error(err);
-
       if (err.name === "ValidationError") {
-        const error = new Error("Invalid data");
-        error.statusCode = BAD_REQUEST;
-        return next(error);
+        return next(new BadRequestError("Invalid data"));
       }
 
       if (err.code === 11000) {
-        const error = new Error("Email already exists");
-        error.statusCode = CONFLICT;
-        return next(error);
+        return next(new ConflictError("Email already exists"));
       }
 
       return next(err);
@@ -102,22 +80,13 @@ const createUser = (req, res, next) => {
 
 const login = (req, res, next) => {
   const { email, password } = req.body;
-  if (!email || !password) {
-    return res.status(BAD_REQUEST).send({
-      message: 'Email and password are required'
-    });
-  }
+
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: "7d" });
       return res.send({ token });
     })
-    .catch((err) => {
-      if (err.statusCode === UNAUTHORIZED) {
-        return res.status(UNAUTHORIZED).send({ message: "Incorrect email or password" });
-      }
-      return next(err);
-    });
+    .catch(next);
 };
 
 module.exports = {
