@@ -25,8 +25,10 @@ This project is the backend API for WTWR. It provides user authentication and pr
 - npm run lint: runs ESLint from the command line
 
 ## Access Information
-- Deployed backend domain: N/A
-- Frontend GitHub repository: N/A
+- Backend GitHub repository: https://github.com/JohyMoney/se_project_express
+- Frontend GitHub repository: https://github.com/JohyMoney/se_project_react
+- Deployed backend domain: ADD_DEPLOYED_BACKEND_URL_HERE
+- Deployed frontend domain: ADD_DEPLOYED_FRONTEND_URL_HERE
 - Project pitch video: N/A
 
 ## Media
