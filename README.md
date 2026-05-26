@@ -27,9 +27,9 @@ This project is the backend API for WTWR. It provides user authentication and pr
 ## Access Information
 - Backend GitHub repository: https://github.com/JohyMoney/se_project_express
 - Frontend GitHub repository: https://github.com/JohyMoney/se_project_react
-- Deployed backend domain: ADD_DEPLOYED_BACKEND_URL_HERE
-- Deployed frontend domain: ADD_DEPLOYED_FRONTEND_URL_HERE
-- Project pitch video: N/A
+- Deployed backend domain: https://dotenvx.com/docs/introduction  or https://github.com/dotenvx/dotenvx#quickstart---
+- Deployed frontend domain: www.dotenvx.com
+- Project pitch video: https://youtu.be/6B3_WpUQEjE
 
 ## Media
 - Screenshots/GIFs: add screenshots of key API behavior or Postman results here
