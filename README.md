@@ -24,6 +24,16 @@ This project is the backend API for WTWR. It provides user authentication and pr
 - npm run dev: launches the server on localhost:3001 with hot reload
 - npm run lint: runs ESLint from the command line
 
+## MongoDB Compass Setup
+1. Start your local MongoDB service.
+2. In MongoDB Compass, connect using your local connection (example: `mongodb://127.0.0.1:27017`).
+3. In the project root, create a `.env` file based on `.env.example`.
+4. Set `MONGO_URI` to your Compass connection string with database name, for example:
+	`MONGO_URI=mongodb://127.0.0.1:27017/wtwr_db?directConnection=true`
+5. Start the API with `npm run dev`.
+
+The server also accepts `MONGODB_URI` or `DATABASE_URL` if you already use those variable names.
+
 ## Access Information
 - Backend GitHub repository: https://github.com/JohyMoney/se_project_express
 - Frontend GitHub repository: https://github.com/JohyMoney/se_project_react
