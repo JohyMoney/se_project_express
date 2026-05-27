@@ -45,7 +45,7 @@ The server also accepts `MONGODB_URI` or `DATABASE_URL` if you already use those
 - Deployed frontend domain (alias): https://se-project-react-hazel.vercel.app/
 
 ## Project Pitch Video (Required)
-- Pitch video link: https://<your-pitch-video-link>
+- Pitch video link: https://youtu.be/EkDSfpUUMXE
 
 The project pitch video is required and should be about this WTWR project.
 
@@ -56,7 +56,7 @@ Recommended structure (max 5 minutes, camera required):
 
 ## Media
 - Screenshots/GIFs: add screenshots of key API behavior or Postman results here
-- Video Demo: add your WTWR pitch video link here
+- Video Demo: https://youtu.be/EkDSfpUUMXE
 
 ## Notes
 Before committing, update sprint.txt in the project root with your current sprint number.
