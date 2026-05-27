@@ -20,8 +20,8 @@ This project is the backend API for WTWR. It provides user authentication and pr
 - Linting with ESLint (airbnb-base) and formatting with Prettier
 
 ## Running the Project
-- npm run start: launches the server on localhost:3001
-- npm run dev: launches the server on localhost:3001 with hot reload
+- npm run start: launches the server on localhost:3002
+- npm run dev: launches the server on localhost:3002 with hot reload
 - npm run lint: runs ESLint from the command line
 
 ## MongoDB Compass Setup
@@ -37,13 +37,26 @@ The server also accepts `MONGODB_URI` or `DATABASE_URL` if you already use those
 ## Access Information
 - Backend GitHub repository: https://github.com/JohyMoney/se_project_express
 - Frontend GitHub repository: https://github.com/JohyMoney/se_project_react
-- Deployed backend domain: https://dotenvx.com/docs/introduction  or https://github.com/dotenvx/dotenvx#quickstart---
-- Deployed frontend domain: www.dotenvx.com
-- Project pitch video: https://youtu.be/6B3_WpUQEjE
+
+## Deployment Links (WTWR)
+- Deployed backend domain (public API URL): https://.vercel.app
+- Backend Vercel deployment page (dashboard): https://vercel.com/john-mahoney-s-projects/se-project-react/4N75Qpv7yWBtaZGxyxXVLL8aVM4o
+- Deployed frontend domain (primary): https://se-project-react-o24ike9oz-john-mahoney-s-projects.vercel.app/
+- Deployed frontend domain (alias): https://se-project-react-hazel.vercel.app/
+
+## Project Pitch Video (Required)
+- Pitch video link: https://<your-pitch-video-link>
+
+The project pitch video is required and should be about this WTWR project.
+
+Recommended structure (max 5 minutes, camera required):
+- Beginning (30-60 sec): introduce yourself and the WTWR project, and state the goal/problem.
+- Middle (2.5-3 min): explain 2-3 key implementation decisions, 1-2 challenges and how you solved them, and mention responsible AI usage if applicable.
+- End (30-60 sec): summarize results, lessons learned, and possible future improvements.
 
 ## Media
 - Screenshots/GIFs: add screenshots of key API behavior or Postman results here
-- Video Demo: add a short demo link here
+- Video Demo: add your WTWR pitch video link here
 
 ## Notes
 Before committing, update sprint.txt in the project root with your current sprint number.
